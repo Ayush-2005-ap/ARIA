@@ -1,0 +1,38 @@
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  device_id VARCHAR(255) UNIQUE NOT NULL,
+  preferred_lang VARCHAR(10) DEFAULT 'en',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sessions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  session_id INT NOT NULL,
+  role ENUM('user','assistant') NOT NULL,
+  content TEXT NOT NULL,
+  tokens_used INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE,
+  INDEX idx_session_created (session_id, created_at)
+);
+
+CREATE TABLE tool_calls (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  message_id INT NOT NULL,
+  tool_name VARCHAR(100) NOT NULL,
+  input_params JSON,
+  result TEXT,
+  success BOOLEAN DEFAULT TRUE,
+  executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE
+);
