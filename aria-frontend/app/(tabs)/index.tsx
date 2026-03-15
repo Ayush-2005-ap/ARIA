@@ -1,98 +1,182 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React, { useState, useRef } from 'react';
+import { 
+  StyleSheet, 
+  View, 
+  TextInput, 
+  KeyboardAvoidingView, 
+  Platform, 
+  ScrollView,
+  SafeAreaView,
+  Text,
+  TouchableOpacity
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { colors, spacing, radius } from '../../constants/theme';
+import ChatBubble from '../../components/ChatBubble';
+import MicButton from '../../components/MicButton';
+import { sendMessage } from '../../services/api';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: 'Hi, I am ARIA. How can I help you today?' }
+  ]);
+  const [inputText, setInputText] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  // Temporary mock IDs since we haven't hooked up auto-auth locally yet
+  const TEMP_SESSION_ID = 2; 
+  const TEMP_USER_ID = 2;
+
+  const handleSend = async () => {
+    if (!inputText.trim()) return;
+
+    const userMessage = inputText.trim();
+    setInputText('');
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setIsThinking(true);
+
+    try {
+        const result = await sendMessage(TEMP_SESSION_ID, userMessage, TEMP_USER_ID);
+        setMessages(prev => [...prev, { role: 'assistant', content: result.reply }]);
+    } catch (error) {
+        setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I couldn't reach the server right now." }]);
+    } finally {
+        setIsThinking(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      
+      {/* Header */}
+      <View style={styles.header}>
+        <Ionicons name="menu" size={28} color={colors.textPrimary} />
+        <View style={styles.headerCenter}>
+          <Text style={styles.headerTitle}>ARIA</Text>
+          <View style={styles.onlineDot} />
+        </View>
+        <Ionicons name="person-circle" size={28} color={colors.primary} />
+      </View>
+
+      {/* Chat Area */}
+      <ScrollView 
+        ref={scrollViewRef}
+        style={styles.chatArea}
+        contentContainerStyle={{ padding: spacing.md }}
+        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+      >
+        {messages.map((msg, index) => (
+          <ChatBubble 
+            key={index} 
+            role={msg.role as 'user' | 'assistant'} 
+            content={msg.content} 
+          />
+        ))}
+        {isThinking && (
+           <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+             <View style={{width: 32, height: 32, borderRadius: 16, backgroundColor: colors.primary, justifyContent:'center', alignItems:'center', marginRight: 10}}>
+                <Text style={{color: '#FFF', fontWeight: 'bold'}}>A</Text>
+             </View>
+             <Text style={{color: colors.textSecondary}}>Aria is thinking...</Text>
+           </View>
+        )}
+      </ScrollView>
+
+      {/* Input Area */}
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      >
+        <View style={styles.bottomContainer}>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="Ask ARIA anything..."
+              placeholderTextColor={colors.textMuted}
+              value={inputText}
+              onChangeText={setInputText}
+              onSubmitEditing={handleSend}
+            />
+            {inputText.length > 0 && (
+                <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
+                  <Ionicons name="send" size={20} color={colors.primary} />
+                </TouchableOpacity>
+            )}
+          </View>
+
+          <View style={{ marginLeft: spacing.md }}>
+            <MicButton 
+              isRecording={isRecording} 
+              onPressIn={() => setIsRecording(true)}
+              onPressOut={() => setIsRecording(false)}
+            />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: colors.bgDark,
+  },
+  header: {
+    height: 56,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderSubtle,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  headerCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  headerTitle: {
+    color: colors.textPrimary,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 1.5,
   },
+  onlineDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.primary,
+    marginLeft: 6,
+  },
+  chatArea: {
+    flex: 1,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    padding: spacing.md,
+    paddingBottom: Platform.OS === 'ios' ? spacing.md : spacing.xl,
+  },
+  inputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 52,
+    backgroundColor: colors.bgGlass,
+    borderWidth: 1,
+    borderColor: colors.borderGlass,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.md,
+  },
+  input: {
+    flex: 1,
+    color: colors.textPrimary,
+    fontSize: 14,
+    height: '100%',
+  },
+  sendButton: {
+    padding: 8,
+  }
 });

@@ -21,7 +21,7 @@ const pool = mysql.createPool({
 // Test the connection
 pool.getConnection()
   .then(conn => {
-    console.log("Successfully connected to the PlanetScale database.");
+    console.log("Successfully connected to the Railway database.");
     conn.release();
   })
   .catch(err => {

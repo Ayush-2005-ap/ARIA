@@ -38,7 +38,7 @@ This project is built using a **100% free tier stack**, utilizing high-performan
 
 ### Infrastructure & Hosting
 - **LLM Provider**: Groq API (Incredibly fast inference)
-- **Database**: PlanetScale (Serverless MySQL 8.0)
+- **Database**: Railway (MySQL)
 - **Backend Hosting**: Render.com (Auto-deploy from GitHub)
 - **Mobile Builds**: EAS Build (Expo Application Services)
 
@@ -47,7 +47,7 @@ This project is built using a **100% free tier stack**, utilizing high-performan
 ### Prerequisites
 - Node.js (v20+)
 - Expo CLI (`npm install -g expo-cli`)
-- A [PlanetScale](https://planetscale.com/) account for the database
+- A [Railway](https://railway.app/) account for the database
 - API Keys from [Groq](https://console.groq.com/), [OpenWeatherMap](https://openweathermap.org/), and [NewsAPI](https://newsapi.org/)
 
 ### 1. Clone the repository
@@ -57,8 +57,9 @@ cd ARIA
 ```
 
 ### 2. Setup Database
-1. Create a database named `aria` in PlanetScale.
-2. Under the `backend/db` directory, execute the `schema.sql` code in your PlanetScale console to create the necessary tables (`users`, `sessions`, `messages`, `tool_calls`).
+1. Create a MySQL database project in Railway.
+2. Retrieve the `MYSQL_URL` connection string from Railway.
+3. Establish a connection to the database and execute the `backend/db/schema.sql` code to create the necessary tables (`users`, `sessions`, `messages`, `tool_calls`).
 
 ### 3. Setup Backend
 ```bash
@@ -68,7 +69,7 @@ npm install
 Create a `.env` file in the `backend` directory with the following variables:
 ```env
 GROQ_API_KEY=your_groq_api_key
-MYSQL_URL=your_planetscale_connection_string
+MYSQL_URL=your_railway_connection_string
 OPENWEATHER_KEY=your_openweather_api_key
 NEWS_API_KEY=your_news_api_key
 PORT=10000

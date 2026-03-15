@@ -16,36 +16,36 @@ This document breaks down the end-to-end development of the ARIA AI Real-time In
   - [x] Install integration libraries (`groq-sdk`, `mysql2`, `dotenv`, `axios`).
 
 ## 2. Database & Data Layer
-- [ ] **PlanetScale Setup**
-  - [ ] Create a database named `aria`.
-  - [ ] Establish `dev` and `main` branches.
+- [ ] **Railway Setup**
+  - [ ] Create a MySQL database on Railway.
+  - [ ] Retrieve connection URL.
 - [x] **Schema Implementation**
   - [x] Create `users` table (id, name, device_id, preferred_lang, created_at).
   - [x] Create `sessions` table (id, user_id, title, created_at, last_active).
   - [x] Create `messages` table (id, session_id, role, content, tokens_used, created_at).
   - [x] Create `tool_calls` table (id, message_id, tool_name, input_params, result, success, executed_at).
 - [x] **Database Connection**
-  - [x] Configure `backend/db/connection.js` using `mysql2` and PlanetScale connect string.
+  - [x] Configure `backend/db/connection.js` using `mysql2` and Railway connect string.
 
 ## 3. Core Chat Backend & LLM Integration
-- [ ] **API Endpoint Configuration**
-  - [ ] Create `/api/users` endpoint to register new devices.
-  - [ ] Create `/api/sessions` endpoints (GET, POST, DELETE) for chat history management.
-  - [ ] Create `/api/chat` POST endpoint for message handling.
-- [ ] **Groq Llama 3.1 Integration**
-  - [ ] Setup `groq-sdk` in `chatController.js`.
-  - [ ] Define the ARIA System Prompt (custom identity: built by Ayush Pandey).
-  - [ ] Fetch the last 10 messages from MySQL as context for every Groq request.
-  - [ ] Implement message persistence mapping Groq replies and user inputs into MySQL.
+- [x] **API Endpoint Configuration**
+  - [x] Create `/api/users` endpoint to register new devices.
+  - [x] Create `/api/sessions` endpoints (GET, POST, DELETE) for chat history management.
+  - [x] Create `/api/chat` POST endpoint for message handling.
+- [x] **Groq Llama 3.1 Integration**
+  - [x] Setup `groq-sdk` in `chatController.js`.
+  - [x] Define the ARIA System Prompt (custom identity: built by Ayush Pandey).
+  - [x] Fetch the last 10 messages from MySQL as context for every Groq request.
+  - [x] Implement message persistence mapping Groq replies and user inputs into MySQL.
 
 ## 4. Mobile Chat UI Foundation
-- [ ] **Theme & Design Tokens**
-  - [ ] Configure `constants/theme.js` using Stitch-extracted exact colors (Dark/Light modes).
-  - [ ] Import and apply `Inter` font family defaults.
-- [ ] **Chat Interface Screens**
-  - [ ] Develop `HomeScreen.jsx` basic layout (Header, list area, input bar).
-  - [ ] Create `<ChatBubble />` component for User and ARIA messages.
-  - [ ] Parse and display static backend responses locally.
+- [x] **Theme & Design Tokens**
+  - [x] Configure `constants/theme.js` using Stitch-extracted exact colors (Dark/Light modes).
+  - [x] Import and apply `Inter` font family defaults.
+- [x] **Chat Interface Screens**
+  - [x] Develop `HomeScreen.jsx` basic layout (Header, list area, input bar).
+  - [x] Create `<ChatBubble />` component for User and ARIA messages.
+  - [x] Parse and display static backend responses locally.
 - [ ] **Session & Message State**
   - [ ] Implement `useSession.js` hook for fetching session history formatting.
 

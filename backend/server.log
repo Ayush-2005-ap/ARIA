@@ -1,0 +1,67 @@
+
+> backend@1.0.0 dev
+> nodemon server.js
+
+[33m[nodemon] 3.1.14[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+Server started on port 10000
+Successfully connected to the Railway database.
+[0mPOST /api/users [32m201[0m 577.140 ms - 13[0m
+[0mPOST /api/sessions [32m201[0m 324.883 ms - 16[0m
+[0mPOST /api/chat [0m-[0m - ms - -[0m
+Error in handling chat via Groq: BadRequestError: 400 {"error":{"message":"The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.","type":"invalid_request_error","code":"model_decommissioned"}}
+    at APIError.generate (/Users/ayushpandey/Desktop/ARIA/backend/node_modules/groq-sdk/core/error.js:40:20)
+    at Groq.makeStatusError (/Users/ayushpandey/Desktop/ARIA/backend/node_modules/groq-sdk/client.js:127:32)
+    at Groq.makeRequest (/Users/ayushpandey/Desktop/ARIA/backend/node_modules/groq-sdk/client.js:269:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async handleChat (/Users/ayushpandey/Desktop/ARIA/backend/controllers/chatController.js:58:22) {
+  status: 400,
+  headers: Headers {
+    date: 'Sun, 15 Mar 2026 04:15:29 GMT',
+    'content-type': 'application/json',
+    'content-length': '284',
+    connection: 'keep-alive',
+    'cache-control': 'private, max-age=0, no-store, no-cache, must-revalidate',
+    server: 'cloudflare',
+    vary: 'Origin',
+    'x-groq-region': 'bom',
+    'x-request-id': 'req_01kkqv9k8deev8aefe5e6znaem',
+    via: '1.1 google',
+    'cf-cache-status': 'DYNAMIC',
+    'set-cookie': '__cf_bm=ykimr3A1cTK0vDaU0SDULS3u5ClbUHc6MMcWHUBT7ko-1773548129.5141647-1.0.1.1-Hj8e7QEZQ6ALXcGWS5XAraFtDPGIBsBr.lBHeWpOwKgi8AyPD2s5vw0UNGKplb3oSZLE6gyzSYCoPALQoq271pLQKoXGwoxujgin5F0KjLCUPr0HifIGz6YWWhLY8Ge9; HttpOnly; Secure; Path=/; Domain=groq.com; Expires=Sun, 15 Mar 2026 04:45:29 GMT',
+    'strict-transport-security': 'max-age=15552000',
+    'cf-ray': '9dc8b28179922543-AGR',
+    'alt-svc': 'h3=":443"; ma=86400'
+  },
+  error: {
+    error: {
+      message: 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.',
+      type: 'invalid_request_error',
+      code: 'model_decommissioned'
+    }
+  }
+}
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (6) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Server started on port 10000
+Successfully connected to the Railway database.
+[0mPOST /api/users [32m201[0m 201.298 ms - 13[0m
+[0mPOST /api/sessions [32m201[0m 82.101 ms - 16[0m
+[0mPOST /api/chat [32m200[0m 763.981 ms - 45[0m
+[0mGET /api/messages/2 [32m200[0m 76.775 ms - 202[0m
+[0mGET /api/sessions/2 [32m200[0m 105.575 ms - 153[0m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Server started on port 10000
+Successfully connected to the Railway database.
