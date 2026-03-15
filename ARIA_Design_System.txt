@@ -1,0 +1,686 @@
+ARIA
+Design System & UI Reference Document
+Based on Stitch-generated screens + Atomiq logo reference
+
+
+
+10 Screens
+Dark + Light mode variants from Stitch
+Design Tokens
+Exact colors, fonts, spacing from source code
+Logo System
+Atomiq-inspired A-mark for ARIA
+Component Specs
+Every reusable UI element documented
+
+1. Design Tokens — Extracted from Stitch Source Code
+
+1.1 Color Palette
+These are the EXACT hex values extracted from the Stitch-generated HTML/CSS source code. Use these in React Native StyleSheet and Tailwind config.
+
+Primary Colors
+ 
+Brand Blue (Primary)
+#0D59F2
+Main action color. Buttons, mic button glow, active states, user message bubble. Exact value from Stitch code.
+
+ 
+Brand Blue (Light Alt)
+#137FEC
+Used in light mode variant. Slightly lighter. Use for light mode CTAs.
+
+ 
+Violet Accent
+#8B5CF6
+Waveform gradient end color. Onboarding glow circles. Secondary accent.
+
+ 
+Cyan Accent
+#22D3EE
+Waveform gradient start color. Used with violet for the voice listening animation bars.
+
+Background Colors
+ 
+Dark Background
+#0A0A0C
+Primary app background in dark mode. Almost pure black with a very slight warm tint. Home screen, chat screen.
+
+ 
+Deep Navy
+#050505
+Voice listening screen background. Slightly lighter than pure black.
+
+ 
+Radial Glow BG
+#050B18
+Voice/onboarding screens. Deep navy with radial blue gradient overlay centered.
+
+ 
+Glass Card
+#1E1E2E
+ARIA message bubbles, tool result cards, settings rows. Semi-transparent dark card.
+
+ 
+Light Background
+#F6F7F8
+Primary background in light mode. Warm near-white, not pure white.
+
+ 
+Light Mode Dark Bg
+#101922
+Dark background value used in light mode variant header/nav.
+
+Semantic / UI Colors
+ 
+Glass Border
+#FFFFFF
+rgba(255,255,255,0.10) — Borders on glass cards. Subtle white at 10% opacity.
+
+ 
+User Bubble Fill
+#0D59F2
+rgba(13,89,242,0.20) + border rgba(13,89,242,0.30) — User message bubble uses brand at low opacity.
+
+ 
+Text Primary
+#F3F4F6
+Primary text on dark backgrounds. Slightly warm white, not pure #FFF.
+
+ 
+Text Secondary
+#9CA3AF
+Timestamps, labels, captions in dark mode. Muted gray.
+
+ 
+Destructive
+#EF4444
+Clear Chat History row in settings. Red for destructive actions only.
+
+ 
+Success
+#10B981
+Tool success confirmations, positive states.
+
+1.2 Typography
+
+Token
+Value
+Used In
+Font Family
+Inter (Google Fonts)
+All text across all screens — extracted from Stitch link tags
+Font Weight Regular
+400
+Body text, message content, descriptions
+Font Weight Medium
+500
+Labels, navigation items, secondary headings
+Font Weight SemiBold
+600
+Section headers, card titles, settings labels
+Font Weight Bold
+700
+Screen titles, ARIA name, CTA button text, onboarding headings
+Base Size
+14px / 28 (RN)
+Default body text in chat messages
+Small
+12px / 24 (RN)
+Timestamps, captions, metadata (e.g. 'Just now', 'Yesterday')
+Large
+20px / 40 (RN)
+Screen titles (Settings, ARIA History)
+XL
+28-32px / 56-64 (RN)
+Onboarding headings (Meet ARIA, Do Things Faster)
+Mono
+Not used in UI
+Reserved for tool result URLs and code snippets only
+Letter Spacing
+tracking-widest on ARIA label
+The top ARIA label in header uses wide letter spacing + uppercase + 60% opacity
+
+1.3 Spacing & Radius
+
+Token
+Value
+Used In
+Border Radius SM
+8px
+Small chips, tags, inner elements
+Border Radius MD
+12px
+Settings rows, small cards
+Border Radius LG
+16px
+Tool result cards, message bubbles (rounded-2xl)
+Border Radius XL
+24px
+Bottom sheet cards, onboarding content card (rounded-3xl)
+Border Radius Full
+9999px
+Mic button, avatar circles, icon buttons, CTA buttons (fully rounded)
+Screen Padding H
+16-24px
+Horizontal padding on all screens
+Screen Padding Top
+16px
+Top padding below header
+Card Padding
+16px
+Internal padding for all glass cards
+Message Gap
+12px
+Vertical gap between chat message bubbles
+Section Gap
+24px
+Gap between sections in settings screen
+
+1.4 Shadows & Effects
+
+Effect
+CSS/RN Value
+Used On
+Mic Button Glow (idle)
+box-shadow: 0 0 20px rgba(13,89,242,0.6)
+Mic button default state
+Mic Button Glow (active)
+box-shadow: 0 0 40px rgba(13,89,242,0.8)
+Mic button while recording
+Pulse Animation
+scale 1.0→1.05, opacity 1.0→0.8, 50% keyframe
+Mic button continuous pulse animation
+Radial BG Glow
+radial-gradient(circle, rgba(13,89,242,0.15) 0%, transparent 70%)
+Voice listening screen background
+Glass Card
+background: rgba(255,255,255,0.05), border: rgba(255,255,255,0.10)
+ARIA message cards, tool cards
+Backdrop Blur
+backdrop-filter: blur(12px)
+Header bar sticky background
+Onboarding Circle Glow
+Concentric rings with decreasing opacity
+Onboarding illustration rings behind icon
+Waveform Bars Gradient
+linear-gradient(to top, #22D3EE, #8B5CF6)
+Voice waveform bars, 7 bars total
+Drop Shadow on Mic Icon
+drop-shadow: 0 0 8px rgba(255,255,255,0.5)
+Microphone icon inside the button
+
+
+2. Screen-by-Screen Design Reference
+All 10 screens shown with dark and light mode variants side by side. Design notes extracted from Stitch source code.
+
+Screen 1 — Home Chat Interface
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Background: #0A0A0C (pure near-black)
+	•	Top bar: Hamburger (left) | ARIA + New Chat label (center, dot indicator) | Profile avatar (right, indigo circle)
+	•	User bubble: indigo bg at 20% opacity, border at 30% opacity, rounded-t-2xl rounded-bl-2xl (sharp bottom-right)
+	•	ARIA bubble: glass card — rgba(255,255,255,0.05) bg, rgba(255,255,255,0.10) border
+	•	Tool result card (weather): Separate dark glass card below ARIA message, shows city + temp + icon + H/L
+	•	Bottom bar: Rounded input (glass) | send icon inside input | floating mic button (indigo glow, 64x64px)
+	•	Mic button shadow: 0 0 20px rgba(13,89,242,0.6) always on
+	•	Input placeholder: 'Ask ARIA anything...' at 30% white opacity
+	•	Light mode: background #F6F7F8, user bubble uses full indigo #137FEC, cards white with border
+
+Screen 2 — Voice Listening State
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Background: #050505 with radial-gradient(circle, rgba(13,89,242,0.15) 0%, transparent 70%) centered
+	•	Mic button: Large dark circle (not indigo) — translucent dark bg, mic icon with white drop-shadow glow
+	•	Label: 'Listening...' in white, large, centered below mic
+	•	Subtitle: 'How can I help you today?' in gray/muted below that
+	•	Waveform: 7 bars, linear-gradient(to top, #22D3EE → #8B5CF6), animated with staggered wave keyframes
+	•	Bar animations: animate-wave-1 through 5, speeds 1.0-1.8s, staggered delays 0-0.4s
+	•	Bottom strip: Cancel X (left) | progress bar indicator (center) | Keyboard icon (right)
+	•	Header: 'ARIA V1.0' small text top-left, blue dot indicator top-right
+	•	This is a FULL SCREEN overlay, not a bottom sheet
+	•	Light mode: background becomes deep blue gradient on white, same waveform colors
+
+Screen 3 — Chat Thinking State
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Identical layout to Home Chat but ARIA reply replaced with thinking indicator
+	•	Thinking indicator: Small indigo circle avatar (left) + 'Aria is thinking...' text + animated gray placeholder block below
+	•	Placeholder block: Dark rounded rectangle, animates (shimmer/pulse) to indicate loading
+	•	User message: Full indigo #0D59F2 bubble (brighter than normal — signals active state)
+	•	Timestamp: 'Just now' appears right-aligned below user bubble in gray
+	•	CTA button changes: Bottom mic button still visible but input bar remains accessible
+	•	Header: 'Aria' as wordmark (no dot indicator) — edit/compose icon top right
+	•	Light mode: thinking block becomes light gray animated shimmer on white bg
+
+Screen 4 — Onboarding Slide 1: Meet ARIA
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Top half: Illustration area — deep navy background with concentric ring animation around central icon
+	•	Center circle: Indigo gradient circle (blue → violet), flask/lab icon inside — NOTE: replace icon with sound-wave or 'A' lettermark for ARIA
+	•	Rings: 3 concentric rings decreasing in opacity outward, orbital dot indicator on outermost ring
+	•	Bottom sheet: Dark rounded card slides up over the illustration (rounded-3xl top corners)
+	•	Heading: 'Meet ARIA' — bold, large, white, centered
+	•	Body: Subtitle description, gray, centered, 2-3 lines max
+	•	Progress dots: 3 dots below text — first is active (indigo pill), others are gray circles
+	•	CTA: Full-width indigo rounded button 'Continue'
+	•	Skip: Text-only link below button in gray
+	•	Light mode: Illustration stays dark navy, bottom sheet becomes white card
+
+Screen 5 — Onboarding Slide 2: Talk Naturally
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Same layout as Onboarding 1 — illustration changes, heading changes
+	•	Illustration: Voice/sound wave animation or microphone icon in center circle
+	•	Heading: 'Talk Naturally' or similar
+	•	Progress dots: 2nd dot active
+	•	CTA: 'Continue' button same indigo style
+	•	Consistent ring + orbital dot animation from slide 1
+
+Screen 6 — Onboarding Slide 3: Do Things Faster
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Background: Deep navy #050B18 for illustration area (darker than slide 1)
+	•	Center: Indigo circle with lightning bolt icon — small floating icons around it (bookmark, message bubble)
+	•	Floating icons: Dark circular chips orbiting the center, subtle border
+	•	Heading: 'Do Things Faster'
+	•	Body: 'ARIA can set alarms, send messages, search the web, check weather, and more.'
+	•	Progress dots: 3rd dot active (indigo pill), first two gray
+	•	CTA: 'Get Started' button — same full-width indigo rounded style
+	•	No skip button on final slide
+	•	This screen should subtly showcase the 5 key tools visually in the orbiting icons
+
+Screen 7 — History / Sessions Screen
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Header: 'ARIA History' bold title (left) | Profile avatar icon (right)
+	•	New Chat button: Full-width indigo button with + icon, top of list — always visible
+	•	Section label: 'RECENT SESSIONS' — uppercase, small, gray, letter-spaced
+	•	Session cards: Dark rounded cards, title (bold white) + timestamp (gray, right-aligned) + preview text (gray, truncated with ...)
+	•	Card states: Tap → navigate to that conversation
+	•	Bottom nav: 3 tabs — History (active, indigo icon) | Chat | Settings
+	•	Older sessions: 'Show older conversations' text link at bottom of list
+	•	Light mode: White card backgrounds, dark text, same layout
+	•	Session title auto-generated from first user message (first 4-5 words)
+
+Screen 8 — Tool Result Cards
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Header: 'A' logo avatar (indigo square) + 'ARIA Showcase' title | Profile icon right
+	•	Section labels: 'WEATHER TOOL', 'NEWS TOOL', 'SEARCH RESULT' — uppercase indigo label above each card
+	•	Weather card: Location (small gray) | Temperature (large bold) | Condition (small) | Weather icon (right) | H/L temps
+	•	News card: Image at top (rounded corners) | BREAKING badge (indigo) + Category | Title (bold) | Source + time | Share icon
+	•	Search card: URL bar at top (gray) | Three dot menu | Blue link title | Description text | Tags as dark pill chips
+	•	Bottom bar: Hamburger | 'Ask ARIA anything...' input | Mic icon | A-mark logo button (indigo, right)
+	•	Bottom bar uses 'A' as send/action button — this is the logo mark in use
+	•	Cards have 1px indigo left border accent on search result card
+	•	Light mode: Cards become white, section labels stay indigo
+
+Screen 9 — Settings Screen
+
+Dark Mode
+Light Mode
+Design Notes
+
+
+	•	Header: Back arrow (left) | 'Settings' title (bold)
+	•	PROFILE section: Dark card with avatar (indigo circle, initials) | Name (bold) | Email/identifier | Language row with chevron
+	•	APP SETTINGS section: Rows inside dark card with dividers
+	•	Dark Mode row: Moon icon (indigo) | 'Dark Mode' label | Toggle switch (indigo when on)
+	•	Voice Output row: Mic icon (indigo) | 'Voice Output' | Toggle (off = gray)
+	•	Clear Chat History row: Trash icon (RED #EF4444) | 'Clear Chat History' (RED text) | Chevron
+	•	ABOUT section: Help Center row | Privacy Policy row | Version string centered at bottom of card
+	•	Log Out: Standalone centered text button at very bottom, white, no background
+	•	Section labels: Uppercase, small, gray, spaced
+	•	Light mode: White card backgrounds, gray section labels, same structure
+
+
+3. Logo Design System — Atomiq-Inspired ARIA Mark
+
+3.1 Design Concept
+The ARIA logo is inspired by the Atomiq logo reference (Lucas Fields, Dribbble) — geometric, sharp-edged, bold letterform reduced to its structural essence. The mark is an abstracted 'A' shape that simultaneously suggests:
+	•	A voice signal / transmission peak (fits the voice-first nature of ARIA)
+	•	A sharp upward arrow (intelligence, precision, forward-thinking)
+	•	A geometric letterform (strong brand recognition — clearly reads as 'A' for ARIA)
+	•	A circuit or antenna tip (tech and AI identity)
+
+3.2 Logo Mark Construction
+
+Construction grid: 100 x 100 units
+
+MARK SHAPE (geometric A):
+  Left stroke:  from (20, 90) to (50, 10)   — angled left leg
+  Right stroke: from (80, 90) to (50, 10)   — angled right leg
+  Crossbar gap: negative space between y=52 and y=62 (no bar, just a gap)
+  Stroke width: 12 units (thick, confident)
+  Corner type:  ALL SHARP — no rounded corners anywhere on the mark
+  Terminals:    Flat cut ends (not angled — cut perpendicular to stroke direction)
+
+NEGATIVE SPACE:
+  Inner triangle: Removed cutout between the two legs above the crossbar gap
+  This creates depth and makes the mark look like a signal transmission tower
+
+SAFE ZONE: 10 units padding on all 4 sides around the mark
+
+
+3.3 Logo Variants
+
+Variant
+Mark Color
+Background
+Use Case
+Primary (Dark)
+#0D59F2 Indigo
+#0A0A0C Near-black
+App icon, splash screen, all in-app usage
+Primary (Light)
+#0D59F2 Indigo
+#FFFFFF White
+Light mode, documents, emails
+Glow Edition
+#0D59F2 + outer glow #818CF8
+#0A0A0C
+Marketing, social media, Play Store screenshots
+Gradient Mark
+Gradient #0D59F2 → #8B5CF6
+#0A0A0C
+Premium contexts — splash, onboarding circle
+White Monochrome
+#FFFFFF
+#0D59F2 Indigo solid
+Stickers, merch, badges
+Dark Monochrome
+#0A0A0C
+#FFFFFF
+Print, B&W contexts
+Notification Icon
+#FFFFFF
+#0D59F2
+Android status bar notification — must be monochrome
+
+3.4 Wordmark Pairing
+
+WORDMARK: ARIA
+  Font:           Space Grotesk Bold 700  (free Google Font)
+  Fallback:       Outfit Bold / Geist Bold
+  Case:           ALL CAPS
+  Letter spacing: 0.08em (slightly open)
+  Color (dark):   #FFFFFF
+  Color (light):  #0D59F2
+
+LOCKUP (Symbol + Wordmark):
+  Layout:         Mark LEFT, wordmark RIGHT, vertically centered
+  Gap:            Equal to mark width x 0.4
+  Min size:       Mark must be at least 24px tall in lockup
+
+STACKED LOCKUP (alternative):
+  Layout:         Mark TOP, wordmark BOTTOM, horizontally centered
+  Gap:            Mark height x 0.3
+  Use when:       Square format needed (social media profile, app icon with text)
+
+
+3.5 App Icon Specs
+
+Platform
+File
+Size
+Spec
+Expo / React Native
+app.json > icon
+1024 x 1024px PNG
+No rounded corners — OS applies mask. Center mark with 15% padding all sides.
+Google Play Store
+play-store-icon.png
+512 x 512px PNG
+Same as above. Play Store rounds corners automatically.
+Android Adaptive
+foreground + background
+108dp foreground
+Mark on transparent foreground, solid indigo background layer.
+iOS App Store
+ios-icon.png
+1024 x 1024px PNG
+No transparency allowed. Solid #0A0A0C background with indigo mark.
+Notification Icon
+notification-icon.png
+96 x 96px PNG
+White mark ONLY on transparent background. Android uses this for status bar.
+Splash Screen
+splash.png
+1242 x 2688px PNG
+Mark centered at 200px wide on #0A0A0C background. No wordmark needed.
+Favicon
+favicon.ico
+32 x 32px
+Simplified mark — thicker strokes, no crossbar gap at this size.
+
+3.6 Logo Don'ts
+	•	Never rotate the mark
+	•	Never stretch or squish — always scale proportionally
+	•	Never place mark on a patterned or photo background without a solid container
+	•	Never add drop shadows to the mark
+	•	Never use the gradient variant below 48px — use solid indigo instead
+	•	Never place light indigo on white — contrast ratio fails WCAG AA
+	•	Never pair the mark with a serif or handwritten font for the wordmark
+	•	Never add rounded corners to the geometric mark — it must stay sharp
+
+
+4. Component Design Specs
+
+4.1 Mic Button — Hero Component
+Property
+Value
+Size
+64 x 64px (w-16 h-16 in Tailwind)
+Shape
+Perfect circle (border-radius: 9999)
+Background
+#0D59F2 solid indigo — ALWAYS, in all states
+Icon
+Microphone SVG, white, 28px, centered
+Idle Shadow
+0 0 20px rgba(13, 89, 242, 0.6)
+Active Shadow
+0 0 40px rgba(13, 89, 242, 0.8)
+Pulse Animation
+scale 1.0→1.05 at 50% keyframe, 2s infinite ease-in-out
+Position
+Fixed bottom-right, 16px from right, 16px above bottom bar
+Active state
+Pulse continues. Navigates to full-screen Voice Listening overlay
+Pressed state
+Scale 0.95, shadow reduced to idle state value
+
+4.2 Message Bubbles
+Property
+User Bubble
+ARIA Bubble
+Alignment
+Right side, max-width 80%
+Left side, max-width 80%, with 32px avatar
+Background
+rgba(13,89,242,0.20)
+rgba(255,255,255,0.05)
+Border
+1px solid rgba(13,89,242,0.30)
+1px solid rgba(255,255,255,0.10)
+Border Radius
+rounded-t-2xl rounded-bl-2xl (no BR)
+rounded-2xl (all corners)
+Padding
+12px horizontal, 10px vertical
+12px horizontal, 10px vertical
+Text Color
+#FFFFFF
+#F3F4F6
+Font Size
+14px, weight 400
+14px, weight 400
+Avatar
+None
+32px indigo circle, left-aligned top
+
+4.3 Tool Result Cards
+Tool
+Card Components
+Weather
+City label (small gray) | Temp (large bold) | Condition (small) | Weather emoji/icon (right) | H/L temps (small gray)
+News
+Hero image (rounded top) | BREAKING badge + category chips | Title (bold 16px) | Source avatar + name + time | Share icon
+Search
+URL bar with favicon + truncated URL + 3-dot menu | Blue hyperlink title | Description body | Tag pill chips at bottom
+Call
+Phone icon + 'Calling [Name]...' | Contact name bold | Number gray | Cancel button
+Weather
+Same as above but inline in chat, smaller variant
+Alarm
+Clock icon | 'Alarm set for [time]' | Day label | Checkmark success state
+
+4.4 Navigation
+Element
+Spec
+Bottom Tab Bar
+3 tabs: History | Chat | Settings. Active tab: indigo icon + indigo label. Inactive: gray icon, no label. 48px height tab bar.
+Top Header
+56px height. Hamburger (left) | ARIA logo + screen title (center) | Action icon (right). Border-bottom 1px rgba(255,255,255,0.08).
+Back Navigation
+Left chevron + screen name. No border. 56px height.
+Tab Active Indicator
+Icon color changes to #0D59F2. Label appears below icon. No underline or pill background.
+Header Blur
+backdrop-filter: blur(12px) on sticky header for scroll-over content effect.
+
+4.5 Input Bar
+Property
+Value
+Height
+52px
+Background
+rgba(255,255,255,0.07) — glass effect
+Border
+1px solid rgba(255,255,255,0.10)
+Border Radius
+9999px (fully rounded pill shape)
+Padding
+16px horizontal, 0 vertical (text vertically centered)
+Placeholder
+'Ask ARIA anything...' at rgba(255,255,255,0.30)
+Send icon
+Arrow/send SVG inside the input, right side, rgba(255,255,255,0.40), turns indigo when text entered
+Position
+Left of mic button. Takes remaining width minus mic button and gap.
+Keyboard behavior
+Pushes input bar up on keyboard show. Chat list scrolls up.
+
+5. Animation Reference
+
+Animation
+Keyframes / Timing
+Used On
+Mic button pulse
+scale: 1.0→1.05→1.0, opacity: 1.0→0.8→1.0, shadow intensity up at 50%. Duration: 2s, infinite, ease-in-out.
+Mic button, always on
+Voice waveform bars
+7 bars, each: height 4px→24px→4px. Duration varies: 1.0s, 1.2s, 1.5s, 1.8s, 1.3s. Delays: 0, 0.1, 0.2, 0.3, 0.4s. Infinite.
+Voice listening screen
+Message slide-in
+translateY(16px)→(0), opacity 0→1. Duration 200ms, ease-out. Trigger: new message arrives.
+Every new chat bubble
+Thinking placeholder
+Shimmer: bg-gradient sweeps left to right. Duration 1.5s infinite. Width 64px placeholder block.
+ARIA thinking state
+Onboarding rings
+Orbital dot rotates 360° around outer ring. Duration 8s, linear, infinite.
+Onboarding illustration
+Screen transition
+Slide in from right (push navigation). Duration 300ms, ease-in-out.
+All screen changes
+Button press
+scale 1.0→0.95. Duration 80ms. Reverses on release.
+All tappable buttons
+Toggle switch
+Thumb slides left/right with color transition bg. Duration 150ms.
+Settings toggles
+
+6. React Native StyleSheet Token Reference
+Paste this into your theme.js or constants/colors.js file:
+
+
+// constants/theme.js — ARIA Design Tokens
+export const colors = {
+  // Backgrounds
+  bgDark:        '#0A0A0C',
+  bgNavy:        '#050505',
+  bgLight:       '#F6F7F8',
+  bgGlass:       'rgba(255,255,255,0.05)',
+  bgGlassHover:  'rgba(255,255,255,0.08)',
+  // Brand
+  primary:       '#0D59F2',
+  primaryLight:  '#137FEC',
+  primaryGlow:   'rgba(13, 89, 242, 0.6)',
+  primaryGlowHi: 'rgba(13, 89, 242, 0.8)',
+  primaryBg:     'rgba(13, 89, 242, 0.20)',
+  primaryBorder: 'rgba(13, 89, 242, 0.30)',
+  // Accents
+  cyan:          '#22D3EE',
+  violet:        '#8B5CF6',
+  // Text
+  textPrimary:   '#F3F4F6',
+  textSecondary: '#9CA3AF',
+  textMuted:     'rgba(255,255,255,0.30)',
+  // Borders
+  borderGlass:   'rgba(255,255,255,0.10)',
+  borderSubtle:  'rgba(255,255,255,0.08)',
+  // Semantic
+  error:         '#EF4444',
+  success:       '#10B981',
+};
+
+export const spacing = {
+  xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48,
+};
+
+export const radius = {
+  sm: 8, md: 12, lg: 16, xl: 24, full: 9999,
+};
+
+export const fonts = {
+  regular: 'Inter_400Regular',
+  medium:  'Inter_500Medium',
+  semibold:'Inter_600SemiBold',
+  bold:    'Inter_700Bold',
+};
+
+
+End of Document  —  ARIA Design System v1.0  —  Ayush Pandey, Bennett University
