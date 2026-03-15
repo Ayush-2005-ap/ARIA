@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Platform } from 'react-native';
 
-// For Android Emulators, localhost is 10.0.2.2. For iOS/Physical devices usually wifi IP or localhost 
-const BASE_URL = Platform.OS === 'android' ? 'http://10.0.2.2:10000/api' : 'http://localhost:10000/api';
+// Live production Render URL
+const BASE_URL = 'https://aria-40si.onrender.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,

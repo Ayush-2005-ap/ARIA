@@ -105,10 +105,10 @@ This document breaks down the end-to-end development of the ARIA AI Real-time In
   - [ ] Setup rate limits (`middleware/rateLimit.js`) allowing 20 reqs/hr.
 
 ## 9. Deployment Pipeline (Week 8)
-- [ ] **Backend Production Rollout**
-  - [ ] Ensure API Keys exist (Groq, MySQL, Weather, News).
-  - [ ] Push Repo and deploy Node.js stack on Render.com.
-  - [ ] Verify Render URL connectivity mapping `services/api.js`.
+- [x] **Backend Production Rollout**
+  - [x] Ensure API Keys exist (Groq, MySQL, Weather, News).
+  - [x] Push Repo and deploy Node.js stack on Render.com.
+  - [x] Verify Render URL connectivity mapping `services/api.js`.
 - [ ] **Mobile App Distribution**
   - [ ] Use `eas-cli` to construct a preview APK for device installation testing.
   - [ ] Setup production Play Store listings, Privacy policies, and App Store graphics.
